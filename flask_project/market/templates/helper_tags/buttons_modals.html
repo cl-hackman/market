@@ -1,0 +1,73 @@
+<!--styling for the modal-->
+<style> 
+    .modal-content {
+        background-color: rgba(221, 0, 255, 0.849);
+        backface-visibility: inherit
+    }
+</style>
+
+
+<!-- Modal for Info button-->
+                         <!--'Modal-Info-{{ x.id }}' from the for loop in 'market_tags.html' line 29-36-->
+  <div class="modal fade" id="Modal-Info-{{ x.id }}"
+       tabindex="-1" 
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            <!--title below-->
+                {{ x.name }}
+          </h5>
+          <button type="button" class="btn-close" 
+                  data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{ x.description }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" 
+                  data-dismiss="modal">Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Modal for Purchase button: here, I attach a verification to 'confirm purchase' to the modal-->
+    <!--'Modal-PurchaseConfirm-{{ x.id }}' from the for loop in 'market_tags.html' line 29-36-->
+  <div class="modal fade" id="Modal-PurchaseConfirm-{{ x.id }}"
+    tabindex="-1" 
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" 
+                data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+          {{ purchase_form.hidden_tag() }} <!--connecting to class in forms.py line 42 and routes.py line 47 -->
+          <h4 class="text-center">
+            Confirm purchase of {{ x.name }} at ${{ x.price }}
+          </h4>
+          <h6 class="text-center">
+            terms and conditions may apply to purchase
+          </h6>
+          <input id="purchased_item" name="purchased_item" type="hidden" value="{{ x.name }}">  <!--'hidden' to make it not display to the user making it a back end work. value="{{ x.name }} so I can know which item the user purchased so I assign it to them-->
+          {{ purchase_form.submit(class='btn btn-outline-success btn-block') }} <!--creates the submit button-->
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" 
+                data-dismiss="modal">Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

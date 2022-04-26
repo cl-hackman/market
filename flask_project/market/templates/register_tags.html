@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Register Page
+{% endblock %}
+
+{% block content %}
+<body class="text-center">
+    <div class='container'>
+        <form method='POST' class='form-register' style='color:teal'>
+            {{ form.hidden_tag() }} <!--this will prevent the user's password(routes.py line76) from getting hacked via a cross site request forgery attack(let's hacker manipulate database)-->
+            <img class="mb-4" src="https://res.cloudinary.com/dzzbgl3eq/image/upload/v1650854660/TraderCollins_bsg2ue.png" alt="" width="350" height="250">    
+            <h1 class="h3 mb-3 font-weight-normal">
+                    Please Create your Account
+            </h1>
+            <br> <!--the fields are below-->
+                {{ form.username.label() }}
+                {{ form.username(class='form-control', placeholder='username') }}
+
+                {{ form.email_address.label() }}
+                {{ form.email_address(class='form-control', placeholder='email_address') }}
+
+                {{ form.password1.label() }}
+                {{ form.password1(class='form-control', placeholder='password') }}
+
+                {{ form.password2.label() }}
+                {{ form.password2(class='form-control', placeholder='re-type password') }}
+
+            </br>
+
+            <div class="checkbox mb-3">
+                <h6>Have An Account?</h6> <!--this and line below lets user go to login page if "user already has an account"-->
+                <a class="btn btn-sm btn-secondary" href="{{ url_for('login_page') }}">Login</a>
+            </div>
+
+                {{ form.submit(class="btn btn-lg btn-block btn-primary") }} <!--the submit button: button lg for large, primary for blue-->
+            
+        </form>
+    </div>
+</body>
+{% endblock %}
+
