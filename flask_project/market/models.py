@@ -20,6 +20,11 @@ class Item(db.Model): # Item() is the table, db.model let's python know that am 
         user.budget -= self.price #to deduct user's budget after each item purchase
         db.session.commit()
 
+    def sell(self, user):
+        self.owner=None
+        user.budget += self.price
+        db.session.commit()
+
 # To create the sqlite database file
 '''
 First change cmd prompt to python shell by typing python in the cmd terminal ( we do this so we can import the database info in this file)
@@ -75,6 +80,9 @@ class User(db.Model, UserMixin):
     def allowed_to_purchase(self, item_obj): # used in routes.py line 42 to let users purchase on the boolean condition below
         return self.budget >= item_obj.price
 
+    def allowed_to_sell(self, item_obj):
+        return item_obj in self.items   #if item_obj is in self.items, then user really owns the object and can sell it so the boolean is executed
+
 # link to know this part: https://flask-login.readthedocs.io/en/latest/#how-it-works
 @login_manager.user_loader  #for flask to seperate the differing user sessions by refreshing
 def load_user(user_id):
@@ -87,8 +95,8 @@ class UserMixin():
     expects user objects to have.
     """
 
-    # Python 3 implicitly set __hash__ to None if we override __eq__
-    # We set it back to its default implementation
+    # Python 3 implicitly set __hash__ to None if we override __eq__(makes the object immutable/un-reusable)
+    # We set it back to its default implementation meaning object becomes hashable allowing bcrypt to encrypt it
     __hash__ = object.__hash__
 
     @property

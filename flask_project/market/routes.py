@@ -1,7 +1,7 @@
 from market import app
 from flask import render_template, redirect, url_for, flash, request    # redirect use is on line 79 in register_page() route. flask's request module lets me manipulate the GET and POST requests
 from market.models import Item, User   # reason for market.models is bc models is not in the __init__ file
-from market.forms import PurchaseItemForm, RegisterForm, LoginForm
+from market.forms import PurchaseItemForm, RegisterForm, LoginForm, SellItemForm
 from market import db
 from flask_login import login_user, logout_user, login_required, current_user # current_user to let me assign purchased item to user line 41
 
@@ -35,6 +35,7 @@ DO NOT TURN THE DEBUG MODE ON WHEN YOU FINSIH BUILDING THE APP FOR PRODUCTION BC
 @login_required #to take user to login page after they click Begin! button
 def market_page():
     purchase_form = PurchaseItemForm() # for buttons_modals purchase confirmation in forms.py class PurchaseItemForm()
+    selling_form = SellItemForm()
     if request.method == 'POST': # so I don't get a submission info anytime I restart the page
         purchased_item = request.form.get('purchased_item') # request module will let me get the value of the purchased item
         p_item_object = Item.query.filter_by(name=purchased_item).first() #to filter by item's value
@@ -44,7 +45,16 @@ def market_page():
                 flash(f'Congratulations on purchasing {p_item_object.name} at ${p_item_object.price}', category='success')
             else:
                 flash(f'Unfortunaly, budget is insufficient to purchase {p_item_object.name}', category='danger')
-
+        #Sell Item Logic
+        sold_item = request.form.get('sold_item')
+        s_item_object = Item.query.filter_by(name=sold_item).first()
+        if s_item_object:
+            if current_user.can_sell(s_item_object):
+                s_item_object.sell(current_user)
+                flash(f"Congratulations on your sale of {s_item_object.name}", category='success')
+            else:
+                flash(f"Unfortunately, item sale couldn't execute {s_item_object.name}", category='danger')
+                
         return redirect(url_for('market_page')) #to go back to market page after purchase (POST request) is made
     # to put more stuff on the market page, add them here as a list of dictionairies and in the render_template, add a variable=variable argl
     '''items = [
@@ -57,7 +67,8 @@ def market_page():
     if request.method == 'GET': # to stop the resubmission info after each page refresh
         items = Item.query.filter_by(owner=None) #filter_by 'owner=None' so items with no owners will be dispalyed on the available left section
         #items = Item.query.all() I will use this if there aren't many items available otherwise, there will no be item left to display
-        return render_template('market_tags.html', items=items, purchase_form=purchase_form)
+        owned_items = Item.query.filter_by(owner=current_user.id)
+        return render_template('market_tags.html', items=items, purchase_form=purchase_form, owned_items=owned_items, selling_form=selling_form)
     # this will appear on the page as the value items so we need Boostrap & Jinja syntax to style the items on the page
     # NOTE : {% %} (only one curly bracket) for logicals like for loops, if statements,etc in Jinja syntax
     # NOTE : {{variable goes here}} (two curly brackets

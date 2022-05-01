@@ -47,6 +47,26 @@
             <h2>Purchased items</h2>
             <p>click sell to release item to market</p>
             <br>
+            <div class="row">
+                {% for owned_item in owned_items %}
+                {% include 'includes/owned_items_modals.html' %}
+                    <div class="col-md-6">  <!--6 so I can display two items in a row-->
+                        <!--boostrap code for display--> 
+                        <div style="margin-bottom: 5px" class="card text-center bg-dark">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ owned_item.name }}</h5> <!--accessible thanks to for loop in line 51-->
+                                <button type="button" class="btn btn-outline-danger" style="margin-bottom: 5px"
+                                        data-toggle="modal" data-target="#Modal-SellingConfirm-{{ owned_item.id }}">
+                                    sell item
+                                </button>
+                                <p class="card-text"><strong>
+                                    item costs ${{ owned_item.price }}
+                                </strong></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
     </div>
 </div>
 {% endblock %}

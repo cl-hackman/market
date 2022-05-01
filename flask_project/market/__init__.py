@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy # this import converts python classes (M
 from flask_bcrypt import Bcrypt #to encrypt passwords in database 
 
 app = Flask(__name__)   # this magic method let's flask find the local file to start a local web app (it creates a Flask instance)
-app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///market.db' # the key is what flask uses to identify(URI) the value sqlite db file
+app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///database.db' # the key is what flask uses to identify(URI) the value sqlite db file
 app.config['SECRET_KEY']='8412ab4692daf739a3483519' # so flask will attack a secure key to the user info from the forms page
 db = SQLAlchemy(app) # Object saying; "Hey! am going to create a database with this app using python classes (models) as database table"
 # creating an instance of Bcrypt, setting it to a variable to be used throughout the application
