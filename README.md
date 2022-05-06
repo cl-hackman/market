@@ -1,6 +1,6 @@
 # market
 flask app wherein registered users can purchase and sell items
 
-run the file execution.py in a python terminal to access the site
+Run the file execution.py in a python terminal to access the site,
+Or in command prompt, type: "python execution.py"
 
-NB: the final section of this project (selling items) is still in progress
