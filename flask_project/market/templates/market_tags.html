@@ -27,7 +27,7 @@
                 <!-- Your rows inside the table HERE: -->
                 <!-- Jinja syntax starts here till line 63 -->
                 {% for x in items %}        <!--this how to write a for loop in jinja syntax-->
-                {% include 'helper_tags/buttons_modals.html' %}<!--to render bootstrap modal from the 'helper_tags' folder and to make it display info unique to each item in the for loop usinf the item's id-->
+                {% include 'modal_tags/owned_modals.html' %}<!--to render bootstrap modal from the 'modal_tags' folder and to make it display info unique to each item in the for loop usinf the item's id-->
                 <tr>
                     <td>{{ x.id }}</td>
                     <td>{{ x.name }}</td>
