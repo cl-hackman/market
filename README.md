@@ -1,3 +1,3 @@
-# market: purchase and sale of items
+# MARKET: purchase and sale of items
 
-# NOTE: I purposefully didn't make items unique to owners/registered users
+NOTE: I purposefully didn't make items unique to owners/registered users
