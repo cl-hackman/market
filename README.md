@@ -1,5 +1,5 @@
 ## market: purchase and sale of items
 
-currently working on deploying it
+currently working on deploying it for free
 
 
