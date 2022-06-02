@@ -1,4 +1,4 @@
-## market: purchase and sale of items
+## TraderCollins
 LINK: (https://tiny.one/tradercollins)
 
 My project is an attempt to mimick an ecommerce arena where registered users can buy and sell goods with their encrypted login information stored on a database.
